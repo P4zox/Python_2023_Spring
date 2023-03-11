@@ -20,7 +20,7 @@ def fuse():
     statusBar['text']=totalfuse
 
 text1=Label(root1,text="主餐: ")
-text1.pack()
+text1.grid(column=0,row=0,columnspan=3,sticky=W)
 text2=Label(root1,text="飲品")
 
 m_food1=StringVar()
@@ -37,15 +37,13 @@ d1=Checkbutton(root1,text="莊園咖啡",variable=drink1,onvalue="莊園咖啡",
 d2=Checkbutton(root1,text="日月潭蜜香紅茶",variable=drink2,onvalue="日月潭蜜香紅茶",offvalue="",foreground="pink",command=fuse)
 d3=Checkbutton(root1,text="伯爵奶茶",variable=drink3,onvalue="伯爵奶茶",offvalue="",foreground="pink",command=fuse)
 statusBar=Label(root1,relief="sunken",bg="black",fg="white",anchor=W,width=45)
-m1.pack()
-m2.pack()
-m3.pack()
-text2.pack()
-d1.pack()
-d2.pack()
-d3.pack()
-statusBar.pack()
-
-
+m1.grid(column=0,row=1)
+m2.grid(column=1,row=1)
+m3.grid(column=2,row=1)
+text2.grid(column=0,row=2,columnspan=3,sticky=W)
+d1.grid(column=0,row=3)
+d2.grid(column=1,row=3)
+d3.grid(column=2,row=3)
+statusBar.grid(column=0,row=4,columnspan=4,sticky=W+E)
 
 root.mainloop()
