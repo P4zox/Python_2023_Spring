@@ -3,11 +3,10 @@ from PIL import Image, ImageTk
 # import ScrollFrame 這個元件
 from tkscrolledframe import ScrolledFrame
 import tkinter.ttk as ttk
-# 從tkinter中引入filedialog
-from tkinter import filedialog
 
 
 
+# 建立好視窗
 root=Tk()
 root.geometry('300x300')
 root.title("HW3-1")
@@ -28,7 +27,7 @@ def choose_brand():
 
 mystringvar=StringVar()
 
-
+# 建立 ComboBox
 mylabel=Label(root,textvariable=mystringvar)
 mylabel.grid(column=0,row=0,columnspan=3,sticky=W)
 box=ttk.Combobox(root,values=["BMW","Mercedes Benz", "Audi"])
@@ -45,7 +44,7 @@ BMW=["1 Series (F40)","1 Series (F52)","2 Series Gran Coupé","2 Series","3 Seri
 Mercedes=["A-Class(Hatchbacks)","A-Class(Sedans)","C-Class","CLA","CLS","E-Class","EQE","EQS","S-Class","C-Class","CLA","E-Class","E-Class","EQA","EQB","EQC","G-Class","GLA","GLB","GLC","GLE","GLS","AMG GT","AMG GT 4-Door Coupé","AMG SL","AMG One","B-Class","Citan Van","Viano","EQV"]
 Audi=["A1","A3","A4","A5","A6","A7","A8","e-tron GT","TT","R8","Q2","Q3","2019","Q4 e-tron","2021","Q5","Q5 e-tron","Q6","Q7","Q8","e-tron"]
 
-
+# 建立 ListBox
 listbox=Listbox(root,selectmode="extended",listvariable=listVar)
 listbox.grid(column=0,row=3)
 listbutton=Button(root,text="choose",command=choose_brand)
