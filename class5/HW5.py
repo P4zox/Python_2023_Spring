@@ -10,14 +10,14 @@ from email.mime.multipart import MIMEMultipart
 # Python專案中的電子郵件內容完成後，接下來就是設定Gmail的SMTP伺服器來寄送
 import smtplib
 # 建立 MIMEText 物件
-text=MIMEText(" Do not get scammed lol ")
+text=MIMEText("Hi, I am Halston, I like to play video games.")
 # 建立 MIMEImage 物件
-image=MIMEImage(Path("C:/Users/halst/Downloads/Dwayne-Johnson-AKA-The-Rock-2019.jpg").read_bytes())
+image=MIMEImage(Path("C:/Users/halst/Downloads/My_cute_picture.png").read_bytes())
 # 創建並設定 MIMEMultipart 物件
 content=MIMEMultipart() #建立 MIMEMultipart 物件
-content["subject"]="I can finally use python to spam email to u" #郵件標題
+content["subject"]="2023 春季班 自我介紹" #郵件標題
 content["from"]="halstonchen1119@gmail.com" #寄件者
-content["to"]="Abiel.Tsai@gmail.com" #收件者
+content["to"]="kubetech.academy0524@gmail.com" #收件者
 content.attach(text) #郵件內容
 content.attach(image) #郵件圖片內容
 # 建立smtplib物件
@@ -35,6 +35,3 @@ with smtp: #利用 with 來自動釋放資源
         smtp.quit()
     except Exception as e:
         print("Error message: ",e)
-
-
-
