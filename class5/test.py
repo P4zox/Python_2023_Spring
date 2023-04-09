@@ -15,7 +15,7 @@ a=input("Please type a url: ")
 # 建立 MIMEText 物件
 text=MIMEText("Hi, I am Halston, I like to play video games.")
 # 建立 MIMEImage 物件
-image=MIMEImage(Path("C:/Users/halst/Downloads/My_cute_picture.png").read_bytes())
+image=MIMEImage(Path("C:/Users/halst/Downloads/Dwayne-Johnson-AKA-The-Rock-2019.jpg").read_bytes())
 # 創建並設定 MIMEMultipart 物件
 content=MIMEMultipart() #建立 MIMEMultipart 物件
 content["subject"]="2023 春季班 自我介紹" #郵件標題
