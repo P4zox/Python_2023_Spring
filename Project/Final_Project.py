@@ -2,6 +2,16 @@ from tkinter import *
 from tkinter import messagebox
 import tkvideo
 import tkinter.ttk as ttk
+from email.mime.text import MIMEText
+# 如果想在電子郵件加入圖片，則需在Python專案中引用MIMEImage類別，並且引用pathlib函式庫來讀取圖片
+# 引入MIMEImage 物件
+from email.mime.image import MIMEImage
+from pathlib import Path
+# 引入 MIMEMultipart 物件
+from email.mime.multipart import MIMEMultipart
+# 引入smtplib物件
+# Python專案中的電子郵件內容完成後，接下來就是設定Gmail的SMTP伺服器來寄送
+import smtplib
 root=Tk()
 root.geometry('895x675')
 root.title("HGS Store Info")
@@ -54,14 +64,38 @@ def infomation():
     table.insert("",index="end",text="total",values=("","",total_lol),tag="totalcolor")
     table.pack()
     info_win.mainloop()
+    return total_lol
 def totallynotrickroll():
-    Newwin=Toplevel(root)
-    Newwin.geometry("1000x500")
-    rickroll=Label(Newwin)
-    rickroll.pack()
-    player=tkvideo.tkvideo("C:/Users/halst/Downloads/rick-astley-never-gonna-give-you-up-official-music-video.mp4",rickroll,loop=1,size=(1000,500))
-    player.play()
-    Newwin.mainloop()
+    subtotal1=int(Product_price_label1['text'].split('.')[1].strip())*int(Product_num_label1["text"])
+    subtotal2=int(Product_price_label2['text'].split('.')[1].strip())*int(Product_num_label1["text"])
+    subtotal3=int(Product_price_label3['text'].split('.')[1].strip())*int(Product_num_label1["text"])
+    subtotal4=int(Product_price_label4['text'].split('.')[1].strip())*int(Product_num_label1["text"])
+    result=messagebox.askquestion('Purchase','Are you sure to purchase the items?')
+    print('user click '+result)
+    user=input("please enter your e-mail: ")
+    if result=="yes":
+        tex=MIMEText("You just buy a total of {}".format(subtotal1+subtotal2+subtotal3+subtotal4))
+# 創建並設定 MIMEMultipart 物件
+    content=MIMEMultipart() #建立 MIMEMultipart 物件
+    content["subject"]="Your e-mail receipt from HSG" #郵件標題
+    content["from"]="halstonchen1119@gmail.com" #寄件者
+    content["to"]=user #收件者
+    content.attach(tex) #郵件內容#郵件圖片內容
+# 建立smtplib物件
+    smtp=smtplib.SMTP(host="smtp.gmail.com",port="587")
+# 利用 with 來自動釋放資源
+    with open("class5/password.txt","r") as f:
+        mailToken=f.read()
+    with smtp: #利用 with 來自動釋放資源
+        try:
+            smtp.ehlo() #驗證SMTP伺服器
+            smtp.starttls() #建立加密傳輸
+            smtp.login("halstonchen1119@gmail.com",mailToken)
+            smtp.send_message(content) #寄送郵件
+            print("Email is Sended completely!")
+            smtp.quit()
+        except Exception as e:
+            print("Error message: ",e)
 def mw2():
     mw=Toplevel(root)
     mw.geometry("1000x750")
