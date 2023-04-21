@@ -17,7 +17,7 @@ image=MIMEImage(Path("C:/Users/halst/Downloads/Dwayne-Johnson-AKA-The-Rock-2019.
 content=MIMEMultipart() #建立 MIMEMultipart 物件
 content["subject"]="I can finally use python to spam email to u" #郵件標題
 content["from"]="halstonchen1119@gmail.com" #寄件者
-content["to"]="Abiel.Tsai@gmail.com" #收件者
+content["to"]="azuco424@gmail.com" #收件者
 content.attach(text) #郵件內容
 content.attach(image) #郵件圖片內容
 # 建立smtplib物件

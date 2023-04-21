@@ -17,7 +17,7 @@ root.geometry('895x675')
 root.title("HGS Store Info")
 root["bg"]="#5C564A"
 from PIL import Image, ImageTk
-logoimg=Image.open("C:/Users/halst/Downloads/290320ed30724fb0aa91d3da057caed0 (1).png")
+logoimg=Image.open("Project/Images/290320ed30724fb0aa91d3da057caed0 (1).png")
 # 轉換為 tk 圖片物件
 tk_img=ImageTk.PhotoImage(logoimg)
 # 設定程式 icon
@@ -72,36 +72,36 @@ def totallynotrickroll():
     subtotal4=int(Product_price_label4['text'].split('.')[1].strip())*int(Product_num_label1["text"])
     result=messagebox.askquestion('Purchase','Are you sure to purchase the items?')
     print('user click '+result)
-    user=input("please enter your e-mail: ")
     if result=="yes":
         tex=MIMEText("You just buy a total of {}".format(subtotal1+subtotal2+subtotal3+subtotal4))
-# 創建並設定 MIMEMultipart 物件
-    content=MIMEMultipart() #建立 MIMEMultipart 物件
-    content["subject"]="Your e-mail receipt from HSG" #郵件標題
-    content["from"]="halstonchen1119@gmail.com" #寄件者
-    content["to"]=user #收件者
-    content.attach(tex) #郵件內容#郵件圖片內容
-# 建立smtplib物件
-    smtp=smtplib.SMTP(host="smtp.gmail.com",port="587")
-# 利用 with 來自動釋放資源
-    with open("class5/password.txt","r") as f:
-        mailToken=f.read()
-    with smtp: #利用 with 來自動釋放資源
-        try:
-            smtp.ehlo() #驗證SMTP伺服器
-            smtp.starttls() #建立加密傳輸
-            smtp.login("halstonchen1119@gmail.com",mailToken)
-            smtp.send_message(content) #寄送郵件
-            print("Email is Sended completely!")
-            smtp.quit()
-        except Exception as e:
-            print("Error message: ",e)
+        user=input("please enter your e-mail: ")   
+    # 創建並設定 MIMEMultipart 物件
+        content=MIMEMultipart() #建立 MIMEMultipart 物件
+        content["subject"]="Your e-mail receipt from HSG" #郵件標題
+        content["from"]="halstonchen1119@gmail.com" #寄件者
+        content["to"]=user #收件者
+        content.attach(tex) #郵件內容#郵件圖片內容
+    # 建立smtplib物件
+        smtp=smtplib.SMTP(host="smtp.gmail.com",port="587")
+    # 利用 with 來自動釋放資源
+        with open("class5/password.txt","r") as f:
+            mailToken=f.read()
+        with smtp: #利用 with 來自動釋放資源
+            try:
+                smtp.ehlo() #驗證SMTP伺服器
+                smtp.starttls() #建立加密傳輸
+                smtp.login("halstonchen1119@gmail.com",mailToken)
+                smtp.send_message(content) #寄送郵件
+                print("Email is Sended completely!")
+                smtp.quit()
+            except Exception as e:
+                print("Error message: ",e)
 def mw2():
     mw=Toplevel(root)
     mw.geometry("1000x750")
     mw2=Label(mw)
     mw2.pack()
-    player1=tkvideo.tkvideo("C:/Users/halst/Downloads/official-launch-trailer-call-of-duty-modern-warfare-ii.mp4",mw2,loop=1,size=(1000,750))
+    player1=tkvideo.tkvideo("Project/Images/official-launch-trailer-call-of-duty-modern-warfare-ii.mp4",mw2,loop=1,size=(1000,750))
     player1.play()
     mw.mainloop()
 def r6():
@@ -109,7 +109,7 @@ def r6():
     r.geometry("1000x750")
     r6=Label(r)
     r6.pack()
-    player2=tkvideo.tkvideo("C:/Users/halst/Downloads/yt5s.io-Inside Rainbow Official Trailer – Tom Clancy's Rainbow Six Siege-(480p).mp4",r6,loop=1,size=(1000,750))
+    player2=tkvideo.tkvideo("Project/Images/yt5s.io-Inside Rainbow Official Trailer – Tom Clancy's Rainbow Six Siege-(480p).mp4",r6,loop=1,size=(1000,750))
     player2.play()
     r.mainloop()
 def ft():
@@ -117,7 +117,7 @@ def ft():
     f.geometry("1000x750")
     ft=Label(f)
     ft.pack()
-    player3=tkvideo.tkvideo("C:/Users/halst/Downloads/yt5s.io-Fortnite Chapter 4 Season 1 Launch Trailer-(480p).mp4",ft,loop=1,size=(1000,750))
+    player3=tkvideo.tkvideo("Project/Images/yt5s.io-Fortnite Chapter 4 Season 1 Launch Trailer-(480p).mp4",ft,loop=1,size=(1000,750))
     player3.play()
     f.mainloop()
 def pubg():
@@ -125,12 +125,12 @@ def pubg():
     p.geometry("1000x750")
     pu=Label(p)
     pu.pack()
-    player4=tkvideo.tkvideo("C:/Users/halst/Downloads/yt5s.io-PUBG - Stand United_ PGC 2019 Trailer-(480p).mp4",pu,loop=1,size=(1000,750))
+    player4=tkvideo.tkvideo("Project/Images/yt5s.io-PUBG - Stand United_ PGC 2019 Trailer-(480p).mp4",pu,loop=1,size=(1000,750))
     player4.play()
     p.mainloop()
 
 # row=1
-title_img=Image.open('C:/Users/halst/Downloads/290320ed30724fb0aa91d3da057caed0 (1).png')
+title_img=Image.open('Project/Images/290320ed30724fb0aa91d3da057caed0 (1).png')
 title_img=title_img.resize((64,64))
 title_img=ImageTk.PhotoImage(title_img)
 title_label=Label(root,image=title_img,bg="#5C564A")
@@ -139,7 +139,7 @@ theme_Button=Button(root,text="類型: 射擊",font=("Inter",10),fg="#F0E5A9",wi
 theme_Button.grid(row=0,column=2,sticky=W)
 search_Entry=Entry(root,text="search a game",width=50)
 search_Entry.grid(row=0,column=3,columnspan=3,sticky=W+E)
-cart_img=Image.open('C:/Users/halst/Downloads/istockphoto-1206806317-612x612.png')
+cart_img=Image.open('Project/Images/istockphoto-1206806317-612x612.png')
 cart_img=cart_img.resize((28,30))
 cart_img=ImageTk.PhotoImage(cart_img)
 cart_Button=Button(root,image=cart_img,bg="#5C564A",command=totallynotrickroll)
@@ -147,28 +147,28 @@ cart_Button.grid(row=0,column=6,sticky=E)
 option_Button=Button(root,text="登入/註冊",font=("Inter",10),fg="Black",bg="#F0E5A9",width=8,height=2)
 option_Button.grid(row=0,column=7,sticky=W)
 # row=2
-line_img=Image.open('C:/Users/halst/Downloads/urmo.png')
+line_img=Image.open('Project/Images/urmo.png')
 line_img=line_img.resize((880,2))
 line_img=ImageTk.PhotoImage(line_img)
 line_Label=Label(root,image=line_img,bg="#5C564A")
 line_Label.grid(row=1,column=0,columnspan=8,sticky=N,pady=1)
 # row=3
-mw2_img=Image.open('C:/Users/halst/Downloads/W5uSEsW7yefCNTHatS03v5q7.jpg')
+mw2_img=Image.open('Project/Images/W5uSEsW7yefCNTHatS03v5q7.jpg')
 mw2_img=mw2_img.resize((220,250))
 mw2_img=ImageTk.PhotoImage(mw2_img)
 mw2_Label=Label(root,image=mw2_img,bg="#5C564A")
 mw2_Label.grid(row=2,column=0,columnspan=2,sticky=W+E)
-r6_img=Image.open('C:/Users/halst/Downloads/Carousel_BoxArt_1200x1600_1200x1600-6888b9d57181d8fcfb3472a7f70ecc49.png')
+r6_img=Image.open('Project/Images/Carousel_BoxArt_1200x1600_1200x1600-6888b9d57181d8fcfb3472a7f70ecc49.png')
 r6_img=r6_img.resize((220,250))
 r6_img=ImageTk.PhotoImage(r6_img)
 r6_Label=Label(root,image=r6_img,bg="#5C564A")
 r6_Label.grid(row=2,column=2,columnspan=2,sticky=W+E)
-fortnite_img=Image.open('C:/Users/halst/Downloads/MV5BNzU2YTY2OTgtZGZjZi00MTAyLThlYjUtMWM5ZmYzOGEyOWJhXkEyXkFqcGdeQXVyNTgyNTA4MjM@._V1_FMjpg_UX1000_.jpg')
+fortnite_img=Image.open('Project/Images/MV5BNzU2YTY2OTgtZGZjZi00MTAyLThlYjUtMWM5ZmYzOGEyOWJhXkEyXkFqcGdeQXVyNTgyNTA4MjM@._V1_FMjpg_UX1000_.jpg')
 fortnite_img=fortnite_img.resize((220,250))
 fortnite_img=ImageTk.PhotoImage(fortnite_img)
 fortnite_Label=Label(root,image=fortnite_img,bg="#5C564A")
 fortnite_Label.grid(row=2,column=4,columnspan=2,sticky=W+E)
-pubg_img=Image.open('C:/Users/halst/Downloads/MV5BMTRkMjg2NDEtYzIxYi00MzZlLTllNmQtOTE4YWMzNjIwZDNkXkEyXkFqcGdeQXVyNTgyNTA4MjM@._V1_.jpg')
+pubg_img=Image.open('Project/Images/MV5BMTRkMjg2NDEtYzIxYi00MzZlLTllNmQtOTE4YWMzNjIwZDNkXkEyXkFqcGdeQXVyNTgyNTA4MjM@._V1_.jpg')
 pubg_img=pubg_img.resize((220,250))
 pubg_img=ImageTk.PhotoImage(pubg_img)
 pubg_Label=Label(root,image=pubg_img,bg="#5C564A")
@@ -216,7 +216,7 @@ Product_minus_button4.grid(row=4,column=7,sticky=W)
 Product_num_label4.grid(row=4,column=7)
 Product_add_button4.grid(row=4,column=7,sticky=E)
 # row=6
-banner_img=Image.open('C:/Users/halst/Downloads/istockphoto-1272531936-170667a.jpg')
+banner_img=Image.open('Project/Images/istockphoto-1272531936-170667a.jpg')
 banner_img=banner_img.resize((885,240))
 banner_img=ImageTk.PhotoImage(banner_img)
 banner_label=Label(root,image=banner_img,bg="#5C564A")
@@ -228,7 +228,7 @@ totalval=StringVar()
 totalval.set('共消費: 0 元')
 totallabel=Label(root,textvariable=totalval,font=('Inter',18),bg='#5C564A',fg="#F0E5A9")
 totallabel.grid(row=7,column=2,columnspan=2,sticky=W)
-info_img=Image.open('C:/Users/halst/Downloads/info but better.png')
+info_img=Image.open('Project/Images/info but better.png')
 info_img=info_img.resize((30,30))
 info_img=ImageTk.PhotoImage(info_img)
 info_Button=Button(root,image=info_img,bg="#5C564A",command=infomation)
