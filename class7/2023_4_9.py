@@ -2,11 +2,13 @@ from twilio.rest import Client
 # 大多數常用操作，只需要用到 Path 類別
 from pathlib import Path
 import pygsheets
+import pandas as pd
 
 gc=pygsheets.authorize(service_file="C:/Users/halst/Documents/Python_2023_Spring/class7/light-quest-383512-ecae9c4fe19c.json")
 sht=gc.open_by_url("https://docs.google.com/spreadsheets/d/1KGAqHO-yo-18AlEgsuihI3O9K5TtSjXV3zgvdHv9ZsQ/edit#gid=0")
 # 利用 Index 選取工作表
 ws=sht[0]
+
 # 利用名字選取工作列表
 # ws=sht.worksheet_by_title("工作表1")
 # ws.update_value("A1","I am using python to write something that can just click in and type, which is fun(jk)")
@@ -40,3 +42,9 @@ ws.update_value("A2","Amy")
 ws.update_value("B2","18")
 ws.update_value("A3","Peter")
 ws.update_value("B3","15")
+
+# 讀取成 df
+df=pd.DataFrame(ws.get_all_records())
+print(df)
+#  dataframe to worksheet
+ws.set_dataframe(df,"A1") # 從欄位 A1 開始存入

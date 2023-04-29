@@ -12,6 +12,8 @@ from email.mime.multipart import MIMEMultipart
 # 引入smtplib物件
 # Python專案中的電子郵件內容完成後，接下來就是設定Gmail的SMTP伺服器來寄送
 import smtplib
+import pygsheets
+import pandas as pd
 root=Tk()
 root.geometry('895x675')
 root.title("HGS Store Info")
@@ -22,8 +24,43 @@ logoimg=Image.open("Project/Images/290320ed30724fb0aa91d3da057caed0 (1).png")
 tk_img=ImageTk.PhotoImage(logoimg)
 # 設定程式 icon
 root.iconphoto(True,tk_img)
+gc=pygsheets.authorize(service_file="C:/Users/halst/Documents/Python_2023_Spring/class7/light-quest-383512-ecae9c4fe19c.json")
+sht=gc.open_by_url("https://docs.google.com/spreadsheets/d/1KGAqHO-yo-18AlEgsuihI3O9K5TtSjXV3zgvdHv9ZsQ/edit#gid=0")
+# 利用 Index 選取工作表
+ws=sht[0]
+
+def systems():
+    def signup(password,mail,name):
+        password1=password.get()
+        mail1=mail.get()
+        name1=name.get()
+        print("Name: "+str(name1)+"\nEmail:"+str(mail1)+"\nPassword:"+str(password1))
+        # df = pd.DataFrame(ws.get_all_records())
+        # df.loc[len(df.index)] = [str(name), str(mail), str(password)]
+        # ws.set_dataframe(df, 'A1')
+        system.destroy() 
+    system=Toplevel(root)
+    system.geometry("300x500")
+    system.title("login/signup system")
+    Name_L=Label(system,text="Name:")
+    Name_E=Entry(system)
+    Email_L=Label(system,text="E-mail:")
+    Email_E=Entry(system)
+    Password_L=Label(system,text="Passowrd:")
+    Password_E=Entry(system)
+    login_B=Button(system,text="login")
+    signup_B=Button(system,text="signup",command=lambda:signup(password=Password_E,mail=Email_E,name=Name_E))
+    Name_L.grid(row=0,column=0)
+    Name_E.grid(row=1,column=0,columnspan=2,sticky=W)
+    Email_L.grid(row=2,column=0)
+    Email_E.grid(row=3,column=0,columnspan=2,sticky=W)
+    Password_L.grid(row=4,column=0)
+    Password_E.grid(row=5,column=0,columnspan=2,sticky=W)
+    login_B.grid(row=6,column=0)
+    signup_B.grid(row=6,column=1)
 
 
+    system.mainloop()
 def add(numlabel,pricelabel):
     numlabel['text'] = int(numlabel['text'])+1
     price=int(pricelabel['text'].split('.')[1].strip())
@@ -144,7 +181,7 @@ cart_img=cart_img.resize((28,30))
 cart_img=ImageTk.PhotoImage(cart_img)
 cart_Button=Button(root,image=cart_img,bg="#5C564A",command=totallynotrickroll)
 cart_Button.grid(row=0,column=6,sticky=E)
-option_Button=Button(root,text="登入/註冊",font=("Inter",10),fg="Black",bg="#F0E5A9",width=8,height=2)
+option_Button=Button(root,text="登入/註冊",font=("Inter",10),fg="Black",bg="#F0E5A9",width=8,height=2,command=systems)
 option_Button.grid(row=0,column=7,sticky=W)
 # row=2
 line_img=Image.open('Project/Images/urmo.png')
