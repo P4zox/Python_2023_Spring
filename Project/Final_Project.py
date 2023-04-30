@@ -28,6 +28,7 @@ gc=pygsheets.authorize(service_file="C:/Users/halst/Documents/Python_2023_Spring
 sht=gc.open_by_url("https://docs.google.com/spreadsheets/d/1KGAqHO-yo-18AlEgsuihI3O9K5TtSjXV3zgvdHv9ZsQ/edit#gid=0")
 # 利用 Index 選取工作表
 ws=sht[0]
+a=""
 
 def systems():
     def signup(password,mail,name):
@@ -35,10 +36,32 @@ def systems():
         mail1=mail.get()
         name1=name.get()
         print("Name: "+str(name1)+"\nEmail:"+str(mail1)+"\nPassword:"+str(password1))
-        # df = pd.DataFrame(ws.get_all_records())
-        # df.loc[len(df.index)] = [str(name), str(mail), str(password)]
-        # ws.set_dataframe(df, 'A1')
-        system.destroy() 
+        df = pd.DataFrame(ws.get_all_records())
+        df.loc[len(df.index)] = [str(name1), str(mail1), str(password1)]
+        print(df)
+        ws.set_dataframe(df, 'A1')
+        system.destroy()
+    def login(password,mail,name):
+        global a
+        password2=password.get()
+        mail2=mail.get()
+        name2=name.get()
+        df = pd.DataFrame(ws.get_all_records())
+        df_result = df[df["E-mail"]==mail2]
+        if len(df_result) >= 1:
+            if df_result["Password"][0] == password2:
+                a=mail2
+                system.destroy()
+                # 帳號密碼皆正確
+            else:
+                a=""
+                messagebox.showwarning("warning","invalid password, \n please enter the information again.")
+        else:
+            a=""
+            messagebox.showwarning("warning","invalid password/e-mail, \n please enter the information again.")    
+        print(a)
+
+
     system=Toplevel(root)
     system.geometry("300x500")
     system.title("login/signup system")
@@ -48,7 +71,7 @@ def systems():
     Email_E=Entry(system)
     Password_L=Label(system,text="Passowrd:")
     Password_E=Entry(system)
-    login_B=Button(system,text="login")
+    login_B=Button(system,text="login",command=lambda:login(password=Password_E,mail=Email_E,name=Name_E))
     signup_B=Button(system,text="signup",command=lambda:signup(password=Password_E,mail=Email_E,name=Name_E))
     Name_L.grid(row=0,column=0)
     Name_E.grid(row=1,column=0,columnspan=2,sticky=W)
@@ -107,40 +130,52 @@ def totallynotrickroll():
     subtotal2=int(Product_price_label2['text'].split('.')[1].strip())*int(Product_num_label1["text"])
     subtotal3=int(Product_price_label3['text'].split('.')[1].strip())*int(Product_num_label1["text"])
     subtotal4=int(Product_price_label4['text'].split('.')[1].strip())*int(Product_num_label1["text"])
-    result=messagebox.askquestion('Purchase','Are you sure to purchase the items?')
-    print('user click '+result)
-    if result=="yes":
-        tex=MIMEText("You just buy a total of {}".format(subtotal1+subtotal2+subtotal3+subtotal4))
-        user=input("please enter your e-mail: ")   
+    if a!="":
+        result=messagebox.askquestion('Purchase','Are you sure to purchase the items?')
+        print('user click '+result)
+        if result=="yes":
+            tex=MIMEText("You just buy a total of {},\n {}".format(subtotal1+subtotal2+subtotal3+subtotal4))
+            user=a
     # 創建並設定 MIMEMultipart 物件
-        content=MIMEMultipart() #建立 MIMEMultipart 物件
-        content["subject"]="Your e-mail receipt from HSG" #郵件標題
-        content["from"]="halstonchen1119@gmail.com" #寄件者
-        content["to"]=user #收件者
-        content.attach(tex) #郵件內容#郵件圖片內容
+            content=MIMEMultipart() #建立 MIMEMultipart 物件
+            content["subject"]="Your e-mail receipt from HSG" #郵件標題
+            content["from"]="halstonchen1119@gmail.com" #寄件者
+            content["to"]=user #收件者
+            content.attach(tex) #郵件內容#郵件圖片內容
     # 建立smtplib物件
-        smtp=smtplib.SMTP(host="smtp.gmail.com",port="587")
+            smtp=smtplib.SMTP(host="smtp.gmail.com",port="587")
     # 利用 with 來自動釋放資源
-        with open("class5/password.txt","r") as f:
-            mailToken=f.read()
-        with smtp: #利用 with 來自動釋放資源
-            try:
-                smtp.ehlo() #驗證SMTP伺服器
-                smtp.starttls() #建立加密傳輸
-                smtp.login("halstonchen1119@gmail.com",mailToken)
-                smtp.send_message(content) #寄送郵件
-                print("Email is Sended completely!")
-                smtp.quit()
-            except Exception as e:
-                print("Error message: ",e)
-def mw2():
-    mw=Toplevel(root)
-    mw.geometry("1000x750")
-    mw2=Label(mw)
-    mw2.pack()
-    player1=tkvideo.tkvideo("Project/Images/official-launch-trailer-call-of-duty-modern-warfare-ii.mp4",mw2,loop=1,size=(1000,750))
-    player1.play()
-    mw.mainloop()
+            with open("class5/password.txt","r") as f:
+                mailToken=f.read()
+            with smtp: #利用 with 來自動釋放資源
+                try:
+                    smtp.ehlo() #驗證SMTP伺服器
+                    smtp.starttls() #建立加密傳輸
+                    smtp.login("halstonchen1119@gmail.com",mailToken)
+                    smtp.send_message(content) #寄送郵件
+                    print("Email is Sended completely!")
+                    smtp.quit()
+                except Exception as e:
+                    print("Error message: ",e)
+    else:
+        messagebox.showwarning("warning","you have not login, please login and try again")
+def mw2_info():
+    def mw2():
+        mw=Toplevel(mw2_choose)
+        mw.geometry("1000x750")
+        mw2=Label(mw)
+        mw2.pack()
+        player1=tkvideo.tkvideo("Project/Images/official-launch-trailer-call-of-duty-modern-warfare-ii.mp4",mw2,loop=1,size=(1000,750))
+        player1.play()
+        mw.mainloop()
+    mw2_choose=Toplevel(root)
+    mw2_choose.geometry("500x500")
+    mw2_choose["bg"]="#5C564A"
+    mw2_trailer_B=Button(mw2_choose,text="Trailer",fg="#F0E5A9",bg="#5C564A",width=10,command=mw2)
+    mw2_trailer_B.grid(row=0,column=0,columnspan=10,sticky=W+E)
+    mw2_description_L=Label(mw2_choose,text="Description",font=1000200,fg="#F0E5A9",bg="#5C564A")
+    mw2_description_L.grid(row=1,column=0,columnspan=10,sticky=W)
+    mw2_choose.mainloop()
 def r6():
     r=Toplevel(root)
     r.geometry("1000x750")
@@ -211,7 +246,7 @@ pubg_img=ImageTk.PhotoImage(pubg_img)
 pubg_Label=Label(root,image=pubg_img,bg="#5C564A")
 pubg_Label.grid(row=2,column=6,columnspan=2,sticky=W+E)
 # row=4
-Product_name_label1=Button(root,text="<Call of Duty> Modern Wafare II 2022",font=("Inter",10),fg="#F0E5A9",bg="#5C564A",command=mw2)
+Product_name_label1=Button(root,text="<Call of Duty> Modern Wafare II 2022",font=("Inter",10),fg="#F0E5A9",bg="#5C564A",command=mw2_info)
 Product_name_label1.grid(row=3,column=0,columnspan=2,padx=5,sticky=W)
 Product_name_label2=Button(root,text="<Rainbow 6> Siege",font=("Inter",10),fg="#F0E5A9",padx=5,bg="#5C564A",command=r6)
 Product_name_label2.grid(row=3,column=2,columnspan=2,padx=5,sticky=W+E)
