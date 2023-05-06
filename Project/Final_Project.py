@@ -30,7 +30,7 @@ sht=gc.open_by_url("https://docs.google.com/spreadsheets/d/1KGAqHO-yo-18AlEgsuih
 ws=sht[0]
 a=""
 
-def systems():
+def login_signup_systems():
     def signup(password,mail,name):
         password1=password.get()
         mail1=mail.get()
@@ -216,7 +216,7 @@ cart_img=cart_img.resize((28,30))
 cart_img=ImageTk.PhotoImage(cart_img)
 cart_Button=Button(root,image=cart_img,bg="#5C564A",command=totallynotrickroll)
 cart_Button.grid(row=0,column=6,sticky=E)
-option_Button=Button(root,text="登入/註冊",font=("Inter",10),fg="Black",bg="#F0E5A9",width=8,height=2,command=systems)
+option_Button=Button(root,text="登入/註冊",font=("Inter",10),fg="Black",bg="#F0E5A9",width=8,height=2,command=login_signup_systems)
 option_Button.grid(row=0,column=7,sticky=W)
 # row=2
 line_img=Image.open('Project/Images/urmo.png')
