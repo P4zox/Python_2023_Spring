@@ -4,11 +4,13 @@ import tkvideo
 from tkscrolledframe import ScrolledFrame
 import tkinter.ttk as ttk
 from email.mime.text import MIMEText
+from email import encoders
 # 如果想在電子郵件加入圖片，則需在Python專案中引用MIMEImage類別，並且引用pathlib函式庫來讀取圖片
 # 引入MIMEImage 物件
 from email.mime.image import MIMEImage
+from email.mime.base import MIMEBase
 from pathlib import Path
-# 引入 MIMEMultipart 物件
+# 引入 MIMEMultipart 
 from email.mime.multipart import MIMEMultipart
 # 引入smtplib物件
 # Python專案中的電子郵件內容完成後，接下來就是設定Gmail的SMTP伺服器來寄送
@@ -83,7 +85,6 @@ def login_signup_systems():
     login_B.grid(row=6,column=0)
     signup_B.grid(row=6,column=1)
 
-
     system.mainloop()
 def add(numlabel,pricelabel):
     numlabel['text'] = int(numlabel['text'])+1
@@ -117,13 +118,14 @@ def infomation():
     subtotal2=int(Product_price_label2['text'].split('.')[1].strip())*int(Product_num_label1["text"])
     subtotal3=int(Product_price_label3['text'].split('.')[1].strip())*int(Product_num_label1["text"])
     subtotal4=int(Product_price_label4['text'].split('.')[1].strip())*int(Product_num_label1["text"])
-    table.insert("",index='end',text='<Call of Duty>Modern Warfare II 2022',values=(Product_price_label1['text'].split('.')[1].strip(),Product_num_label1["text"],subtotal1))
-    table.insert("",index='end',text='<Rainbow 6> Siege',values=(Product_price_label2['text'].split('.')[1].strip(),Product_num_label2["text"],subtotal2))
-    table.insert("",index='end',text='<Fortnite> Chapter 4 Season 1',values=(Product_price_label3['text'].split('.')[1].strip(),Product_num_label3["text"],subtotal3))
-    table.insert("",index='end',text='<PUBG> Mobile',values=(Product_price_label4['text'].split('.')[1].strip(),Product_num_label4["text"],subtotal4))
+    table.insert("",index='end',text=Product_name_label1["text"],values=(Product_price_label1['text'].split('.')[1].strip(),Product_num_label1["text"],subtotal1))
+    table.insert("",index='end',text=Product_name_label2["text"],values=(Product_price_label2['text'].split('.')[1].strip(),Product_num_label2["text"],subtotal2))
+    table.insert("",index='end',text=Product_name_label3["text"],values=(Product_price_label3['text'].split('.')[1].strip(),Product_num_label3["text"],subtotal3))
+    table.insert("",index='end',text=Product_name_label4["text"],values=(Product_price_label4['text'].split('.')[1].strip(),Product_num_label4["text"],subtotal4))
     total_lol=subtotal1+subtotal2+subtotal3+subtotal4
     table.insert("",index="end",text="total",values=("","",total_lol),tag="totalcolor")
     table.pack()
+    
     info_win.mainloop()
     return total_lol
 def reciept():
@@ -131,18 +133,30 @@ def reciept():
     subtotal2=int(Product_price_label2['text'].split('.')[1].strip())*int(Product_num_label1["text"])
     subtotal3=int(Product_price_label3['text'].split('.')[1].strip())*int(Product_num_label1["text"])
     subtotal4=int(Product_price_label4['text'].split('.')[1].strip())*int(Product_num_label1["text"])
+    
+    shoppingList=[[Product_name_label1["text"],Product_price_label1['text'].split('.')[1].strip(),int(Product_num_label1["text"])],[Product_name_label2["text"],Product_price_label2['text'].split('.')[1].strip(),int(Product_num_label2["text"])],[Product_name_label3["text"],Product_price_label3['text'].split('.')[1].strip(),int(Product_num_label3["text"])],[Product_name_label4["text"],Product_price_label4['text'].split('.')[1].strip(),int(Product_num_label4["text"])]]
+    shoppingDf = pd.DataFrame(shoppingList,columns=["Game","Price","Number"])
+    shoppingDf.to_excel("shopList.xlsx")
     if a!="":
         result=messagebox.askquestion('Purchase','Are you sure to purchase the items?')
         print('user click '+result)
         if result=="yes":
-            tex=MIMEText("You just buy a total of {}".format(subtotal1+subtotal2+subtotal3+subtotal4))
+            tempContent = "You just buy a total of {}".format(subtotal1+subtotal2+subtotal3+subtotal4)
+            tempContent = tempContent+"\n"
+            tex=MIMEText(tempContent)
+            part = MIMEBase('application', "octet-stream")
+            part.set_payload(open("shopList.xlsx", "rb").read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition', 'attachment; filename="shopList.xlsx"')
             user=a
     # 創建並設定 MIMEMultipart 物件
             content=MIMEMultipart() #建立 MIMEMultipart 物件
+            content.attach(part)
             content["subject"]="Your e-mail receipt from HSG" #郵件標題
             content["from"]="halstonchen1119@gmail.com" #寄件者
             content["to"]=user #收件者
             content.attach(tex) #郵件內容#郵件圖片內容
+
     # 建立smtplib物件
             smtp=smtplib.SMTP(host="smtp.gmail.com",port="587")
     # 利用 with 來自動釋放資源
@@ -346,7 +360,7 @@ theme_button.grid(row=0,column=2,sticky=E)
 theme_Combo.grid(row=0,column=1,sticky=E)
 # search_Entry=Entry(root,text="search a game",width=50)
 # search_Entry.grid(row=0,column=3,columnspan=3,sticky=E)
-listbox=Listbox(root,listvariable=listVar,selectmode="single",height=1,width=30)
+listbox=Listbox(root,listvariable=listVar,selectmode="single",height=4,width=30)
 listbox.grid(column=3,row=0,columnspan=3,sticky=E)
 cart_img=Image.open('Project/Images/istockphoto-1206806317-612x612.png')
 cart_img=cart_img.resize((28,30))
@@ -457,6 +471,5 @@ info_Button=Button(root,image=info_img,bg="#5C564A",command=infomation)
 info_Button.grid(row=7,column=6,sticky=E)
 quit_button=Button(root,text="離開",font=("Bold",18),fg="Black",bg="#F0E5A9",command=root.destroy)
 quit_button.grid(row=7,column=7,padx=5,sticky=W+E)
-
 
 root.mainloop()
