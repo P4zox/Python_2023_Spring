@@ -16,7 +16,7 @@ import smtplib
 import pygsheets
 import pandas as pd
 root=Tk()
-root.geometry('895x675')
+root.geometry('975x675')
 root.title("HGS Store Info")
 root["bg"]="#5C564A"
 from PIL import Image, ImageTk
@@ -226,7 +226,7 @@ def r6_info():
         if add_on_counter2>0:
             messagebox.showwarning("showwarning","You just purchase the add on system")
         else:
-            mw_price.set("NT. "+str(r6_price_rate+1490))
+            r6_price.set("NT. "+str(r6_price_rate+1490))
             add_on_counter2+=1
     r6_choose=Toplevel(root)
     r6_choose.geometry("500x750")
@@ -256,8 +256,9 @@ def r6_info():
     welcomePack_B.grid(row=8,column=0,columnspan=8,sticky=W)
     welcomePack_L.grid(row=9,column=0,columnspan=8,sticky=W)
     r6_choose.mainloop()
-
+add_on_counter3=0
 def ft_info():
+    global add_on_counter3
     description_text="Fortnite is an online video game developed by Epic Games and released in 2017. It is available in three distinct game mode versions that otherwise share the same general gameplay and game engine: Fortnite Battle Royale, a free-to-play battle royale game in which up to 100 players fight to be the last person standing; Fortnite: Save the World, a cooperative hybrid tower defense-shooter and survival game in which up to four players fight off zombie-like creatures and defend objects with traps and fortifications they can build; and Fortnite Creative, in which players are given complete freedom to create worlds and battle arenas. Save the World and Battle Royale were released in 2017 as early access titles, while Creative was released on December 6, 2018. While the Save the World and Creative versions have been successful for Epic Games, Fortnite Battle Royale in particular became an overwhelming success and a cultural phenomenon, drawing more than 125 million players in less than a year, earning hundreds of millions of dollars per month. Fortnite as a whole generated $9 billion in gross revenue up until December 2019. Save the World is available only for Windows, macOS,[c] PlayStation 4, and Xbox One, while Battle Royale and Creative were released for all those platforms, and also for Nintendo Switch, iOS,[c] and Android devices.[c] The game also launched with the release of the ninth-generation PlayStation 5 and Xbox Series X/S consoles."    
     def ft():
         f=Toplevel(root)
@@ -267,20 +268,40 @@ def ft_info():
         player3=tkvideo.tkvideo("Project/Images/yt5s.io-Fortnite Chapter 4 Season 1 Launch Trailer-(480p).mp4",ft,loop=1,size=(1000,750))
         player3.play()
         f.mainloop()
+    def addOn3():
+        global add_on_counter3
+        if add_on_counter3>0:
+            messagebox.showwarning("showwarning","You just purchase the add on system")
+        else:
+            ft_price.set("NT. "+str(ft_price_rate+359))
+            add_on_counter3+=1
     ft_choose=Toplevel(root)
     ft_choose.geometry("500x750")
-    ft_choose["bg"]="#5C564A"
-    ft_trailer_B=Button(ft_choose,text="Trailer",fg="#F0E5A9",bg="#5C564A",width=10,command=ft)
+    ft_trailer_B=Button(ft_choose,text="Trailer",width=10,command=ft)
     ft_trailer_B.grid(row=0,column=0,columnspan=10,sticky=W+E)
-    ft_description_L=Label(ft_choose,text="Description",font=1000200,fg="#F0E5A9",bg="#5C564A")
+    ft_description_L=Label(ft_choose,text="Description",font=1000200)
     ft_description_L.grid(row=1,column=0,columnspan=10,sticky=W)
-    sframe1=ScrolledFrame(ft_choose,width=400,height=400,bg="#5C564A")
+    sframe1=ScrolledFrame(ft_choose,width=400,height=400,bg="white")
     sframe1.grid(row=2,column=0,columnspan=4,sticky=W)
     sframe1.bind_arrow_keys(ft_choose)
     sframe1.bind_scroll_wheel(ft_choose)
     inner_frame=sframe1.display_widget(Frame)
-    r6_description_info=Message(inner_frame,text=description_text,width=400,bg="#5C564A",fg="#F0E5A9")
-    r6_description_info.grid(row=0,column=0,columnspan=4,sticky=W)
+    sframe2=ScrolledFrame(inner_frame,width=400,height=400,bg="white")
+    sframe2.grid(row=2,column=0,columnspan=4,sticky=W)
+    sframe2.bind_arrow_keys(inner_frame)
+    sframe2.bind_scroll_wheel(inner_frame)
+    inner_frame2=sframe2.display_widget(Frame)
+    ft_description_info=Message(inner_frame2,text=description_text,width=400)
+    ft_description_info.grid(row=0,column=0,columnspan=4,sticky=W)
+
+    koi_img=Image.open('Project\Images\Koi_Kindom_pack.jpg')
+    koi_img=koi_img.resize((300,400))
+    global koi
+    koi=ImageTk.PhotoImage(koi_img)
+    koi_B=Button(inner_frame,width = 300, height=400,image=koi,command=addOn3)
+    koi_L=Label(inner_frame,text="<Fortnite> Koi Kingdom Pack : NT.359")
+    koi_B.grid(row=8,column=0,columnspan=8,sticky=W)
+    koi_L.grid(row=9,column=0,columnspan=8,sticky=W)
     ft_choose.mainloop()
 def pubg_info(): 
     description_text="PUBG: Battlegrounds (previously known as PlayerUnknown's Battlegrounds) is a battle royale game developed by PUBG Studios and published by Krafton. The game, which was inspired by the Japanese film Battle Royale (2000), is based on previous mods created by Brendan PlayerUnknown Greene for other games, and expanded into a standalone game under Greene's creative direction. It is the first game in the PUBG Universe series. The game is played from either a third-person or first-person perspective. In the game, up to one hundred players parachute onto an island where they scavenge for weapons and equipment to kill other players while avoiding getting killed themselves. The available safe area of the game's map decreases in size over time, directing surviving players into an ever tightening space to force encounters. The last surviving player (or team) wins the round. It was first released for Windows via Steam's early access beta program in March 2017, with a full release in December 2017. The game was also released by Microsoft Studios for the Xbox One via its Xbox Game Preview program that same month, and officially released in September 2018. PUBG Mobile, a free-to-play mobile game version for Android and iOS, was released in 2018, in addition to a port for the PlayStation 4. A version for the Stadia streaming platform was released in April 2020, with Xbox Series X/S and PlayStation 5 versions being released in November 2020. The game has been free-to-play for all platforms since January 12, 2022. The game received positive reviews from critics, who found that while the game had some technical flaws, it presented new types of gameplay that could be easily approached by players of any skill level and was highly replayable. The game was credited with popularizing the battle royale genre, with a number of unofficial Chinese clones also being produced following its success. The game received several Game of the Year nominations and set seven Guinness World Records, among many other accolades. PUBG Corporation has run several small tournaments and introduced in-game tools to help with broadcasting the game to spectators, as they wish for it to become a popular esport. It has sold over 75 million copies on personal computers and game consoles, is the best-selling video game on PC and Xbox One, and is the fifth best-selling video game of all time. Currently, the game has accumulated $13 billion in worldwide revenue, including from the more successful mobile version of the game, and it is considered to be one of the highest-grossing video games of all time."   
@@ -306,18 +327,27 @@ def pubg_info():
     inner_frame=sframe1.display_widget(Frame)
     pubg_description_info=Message(inner_frame,text=description_text,width=400,bg="#5C564A",fg="#F0E5A9")
     pubg_description_info.grid(row=0,column=0,columnspan=4,sticky=W)
-    pubg_choose.mainloop()    
-
+    pubg_choose.mainloop()
+def choose_genre():
+    if theme_Combo.get()=="射擊":
+        listVar.set(shooter)
+listVar=StringVar()
+shooter=["<Call of duty> Mordern Warfare II 2022 ","Rainbow 6 Seige","Fortnite","PUBG Mobile"]
 # row=1
 title_img=Image.open('Project/Images/290320ed30724fb0aa91d3da057caed0 (1).png')
 title_img=title_img.resize((64,64))
 title_img=ImageTk.PhotoImage(title_img)
 title_label=Label(root,image=title_img,bg="#5C564A")
 title_label.grid(row=0,column=0,sticky=W)
-theme_Button=Button(root,text="類型: 射擊",font=("Inter",10),fg="#F0E5A9",width=10,height=2,bg="#5C564A")
-theme_Button.grid(row=0,column=2,sticky=W)
-search_Entry=Entry(root,text="search a game",width=50)
-search_Entry.grid(row=0,column=3,columnspan=3,sticky=W+E)
+theme_Combo=ttk.Combobox(root,value=["射擊","冒險","合作",'恐怖','奇幻','RPG',"動作","多人","沙盒",'解謎'],foreground="#F0E5A9",background="#5C564A")
+# theme_Button=Button(root,text="類型: 射擊",font=("Inter",10),fg="#F0E5A9",width=10,height=2,bg="#5C564A")
+theme_button=Button(root,text="okay",bg="#5C564A",fg="#F0E5A9",command=choose_genre)
+theme_button.grid(row=0,column=2,sticky=E)
+theme_Combo.grid(row=0,column=1,sticky=E)
+# search_Entry=Entry(root,text="search a game",width=50)
+# search_Entry.grid(row=0,column=3,columnspan=3,sticky=E)
+listbox=Listbox(root,listvariable=listVar,selectmode="single",height=1,width=30)
+listbox.grid(column=3,row=0,columnspan=3,sticky=E)
 cart_img=Image.open('Project/Images/istockphoto-1206806317-612x612.png')
 cart_img=cart_img.resize((28,30))
 cart_img=ImageTk.PhotoImage(cart_img)
